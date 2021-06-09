@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations</title>
+</head>
+
+<body>
+    <h1>hot restaurnat</h1>
+    <h2>make your ressie</h2>
+
+    <form>
+        <div>
+            <label for="js-name">Name</label>
+            <input type="text" id="js-name"></input>
+        </div>
+        <div>
+            <label for="js-phone">Phone</label>
+            <input type="text" id="js-phone"></input>
+        </div>
+        <div>
+            <label for="js-email">email</label>
+            <input type="text" id="js-email"></input>
+        </div>
+        <div>
+            <label for="js-id">id</label>
+            <input type="text" id="js-id"></input>
+        </div>
+        <button type="submit" id="js-submit">submit</button>
+    </form>
+
+    <script>
+        document.getElementById('js-submit').addEventListener('click', (e) => {
+            e.preventDefault();
+
+            const newReservation = {
+                customerName: document.getElementById('js-name').value.trim(),
+                phoneNumber: document.getElementById('js-phone').value.trim(),
+                customerEmail: document.getElementById('js-email').value.trim(),
+                customerID: document.getElementById('js-id').value.trim(),
+            };
+
+            console.log(newReservation);
+
+            fetch('/api/tables', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newReservation),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data) {
+                        alert('ressie added');
+
+                    } else {
+                        alert('you are wait');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
+
+</html>
